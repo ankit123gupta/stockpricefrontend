@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+#  Stock Price
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I use stocks data as a test input
 
-## Available Scripts
+Live -> [https://stockprice-1257c.web.app/](https://stockprice-1257c.web.app/)
 
-In the project directory, you can run:
+Backend live -> [https://stockpricebackend.herokuapp.com](https://stockpricebackend.herokuapp.com)
 
-### `npm start`
+Backend Repo -> [https://github.com/ankit123gupta/stockpricebackend](https://github.com/ankit123gupta/stockpricebackend)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Frontend Repo -> [https://github.com/ankit123gupta/stockpricefrontend](https://github.com/ankit123gupta/stockpricefrontend)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## installation
+```
+1 Go to project directory 
 
-### `npm run build`
+2 pip install -r requirements.txt
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3 python manage.py runserver
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+live server is runing at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### API discription
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1 For Signup
+```
+url -> /api/signup/
+method -> POST
+body -> { 'username': USERNAME , 'password' : PASSWORD }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+response -> django token
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2 For login
+```
+url -> /login/
+method -> POST
+body -> { 'username': USERNAME , 'password' : PASSWORD }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+response -> django token
+```
 
-## Learn More
+3 Upload CSV File
+```
+url -> /api/uploadcsv
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> POST
+body -> CSV file
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+response -> CSV data which are add to DB
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4 Upload CSV data in JSON form
+```
+url -> /api/uploadjson
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> POST
+body -> CSV data in json form
 
-### Code Splitting
+response -> {"msg":"file upload successfully"}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+5 Get All Data
+```
+url -> /api/filter
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
 
-### Analyzing the Bundle Size
+resprnse -> array containg all data
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+6 Get Filtered Data
+```
+url -> /api/filter/?date__lte=2008-07-03&date__gte=2008-07-03&symbol=GAIL
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
 
-### Making a Progressive Web App
+resprnse -> array containg requested data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+date__lte => date less than equal to
 
-### Advanced Configuration
+date__gte => date greater than equal to
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+symbol => symbol use by NSE/BSE for any company
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+7 Delete Data
+```
+url -> /api/delete/deletedata/?date__lte=2008-07-03&date__gte=2008-07-03&symbol=GAIL
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+resprnse -> filter fields (i.e. date__lte=2008-07-03&date__gte=2008-07-03&symbol=GAIL)
+```
+
+Note: url -> /api/delete/deletedata/ will delete all data
+
+8 Show Result categorized by company
+```
+url -> /api/showcategorizeddata
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
+
+resprnse -> dictionary required data
+```
+
+9 Search API
+```
+url -> /api/search/?search=GAIL,CIPLA
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
+
+resprnse -> array containg requested data
+```
+
+
+10 Get List of all company name
+```
+url -> /api/showdata/companylist
+headers : { 'Authorization' : 'Token TOKEN_VALUE'}
+method -> GET
+
+resprnse -> array containg requested data
+```
+
+
+
+
+
+
+
+
